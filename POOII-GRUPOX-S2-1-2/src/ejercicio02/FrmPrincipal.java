@@ -4,19 +4,62 @@
  */
 package ejercicio02;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Carlos
  */
 public class FrmPrincipal extends javax.swing.JFrame {
-
-    /**
-     * Creates new form FrmPrincipal
-     */
+    private List<Producto> listaProductos;
+    
     public FrmPrincipal() {
         initComponents();
+        listaProductos = new ArrayList<>();
     }
-
+    
+    private void registrarProducto(){
+        String nombre = txtNombreProducto.getText();
+        int cantidad = Integer.parseInt(txtCantidad.getText());
+        Producto nuevoProducto = new Producto(nombre,cantidad);
+        
+        listaProductos.add(nuevoProducto);
+        
+        JOptionPane.showMessageDialog(this, "Producto "+ nuevoProducto.getNombreProducto() +" registrado correctamente.");
+        
+        System.out.println(nuevoProducto.toString());
+        guardarStock(nuevoProducto);
+        //listaProductos = new ArrayList<>();
+        limpiar();
+    }
+    private void guardarStock(Producto p){
+        String nombreArchivo = "stock.txt";
+        //String rutaArchivo = this.getClass().getResource("").getPath() + nombreArchivo;
+        
+        try{
+            //Se guarda el archivo stock.txt en la carpeta raiz del Java Application
+            BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo,true));
+            
+            writer.write(p.toString());
+                writer.newLine();
+            writer.close();
+        } catch(IOException e){
+            JOptionPane.showMessageDialog(this, e.getMessage(),
+                                      "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void limpiar(){
+        txtNombreProducto.setText("");
+        txtCantidad.setText("");
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,11 +80,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         lblNombreProducto.setText("Nombre producto:");
 
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
+            }
+        });
+
         lblCantidad.setText("Cantidad:");
 
         btnNuevo.setText("Nuevo");
 
         btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,6 +135,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        registrarProducto();
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)) {
+            evt.consume();
+	}
+    }//GEN-LAST:event_txtCantidadKeyTyped
 
     /**
      * @param args the command line arguments

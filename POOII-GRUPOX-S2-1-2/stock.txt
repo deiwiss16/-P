@@ -1,0 +1,3 @@
+Nombre Producto: platano	 Cantidad: 12
+Nombre Producto: pera	 Cantidad: 11
+Nombre Producto: manzana	 Cantidad: 10

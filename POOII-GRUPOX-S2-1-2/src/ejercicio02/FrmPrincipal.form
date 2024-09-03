@@ -74,6 +74,9 @@
     <Component class="javax.swing.JTextField" name="txtNombreProducto">
     </Component>
     <Component class="javax.swing.JTextField" name="txtCantidad">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCantidadKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCantidad">
       <Properties>
@@ -89,6 +92,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Registrar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
