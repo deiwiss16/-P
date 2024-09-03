@@ -9,5 +9,5 @@ package ejercicio02;
  * @author Carlos
  */
 public class Producto {
-    
+    //prueba
 }
