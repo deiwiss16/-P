@@ -9,5 +9,13 @@ package ejercicio01;
  * @author Carlos
  */
 public class Curso {
-    
+
+    String alumno;
+    String código;
+
+    public Curso(String alumno, String código) {
+        this.alumno = alumno;
+        this.código = código;
+    }
+
 }
