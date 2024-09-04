@@ -1,6 +1,7 @@
 
 package ejercicio01;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,13 +11,32 @@ public class FrmPrincipal extends javax.swing.JFrame {
      * Creates new form FrmPrincipal
      */
     
+    private List<Alumno> listaAlumnos = new ArrayList<>();
+    
     private final Map<String, String> alumnos = new HashMap<>();
     private final String[] cursos = {"TEPROO", "INISCO", "INHUCO", "MATE1", "MATE2"};
-    
+    private Alumno buscarAlumnoPorCodigo(String codigo){
+        for(Alumno alumno: listaAlumnos){
+            if(alumno.getCodigoAlumno().equals(codigo)){
+                return alumno;
+            }
+        }
+        return null;
+    }
     public FrmPrincipal() {
         initComponents();
         inicializarAlumnos();
     }
+    /*
+    private void inicializarAlumnos(){
+        List<Curso> cursosLuis = new ArrayList<>();
+        cursosLuis.add(new Curso("TEPROO"));
+        cursosLuis.add(new Curso("MATE1"));
+        
+        Alumno alumno1 = new Alumno("N001", "Luis Romero", cursosLuis);
+        listaAlumnos.add(alumno1);
+    }*/
+    
     
     private void inicializarAlumnos() {
         alumnos.put("N001", "Luis Romero");
@@ -100,20 +120,24 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btnCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {
         // Obtener código de alumno ingresado
         String codigoAlumno = txtCodigoAlumno.getText().trim();
-
+        Alumno alumno =buscarAlumnoPorCodigo(codigoAlumno);
         // Buscar nombre del alumno en la "base de datos"
-        String nombreAlumno = alumnos.get(codigoAlumno);
+        //String nombreAlumno = alumnos.get(codigoAlumno);
 
-        if (nombreAlumno != null) {
-            txtNombreAlumno.setText(nombreAlumno);
-
+        if (alumno != null) {
+            //txtNombreAlumno.setText(nombreAlumno);
+            txtNombreAlumno.setText(alumno.getNombre());
             // Cargar cursos disponibles en el JTextArea
             jTextArea1.setText(""); // Limpiar el área de texto
-            for (String curso : cursos) {
+            /*for (String curso : cursos) {
                 jTextArea1.append(curso + "\n");
+            }*/
+            for (Curso curso : alumno.getListaCursos()){
+                jTextArea1.append(curso.getNombreCurso() + "\n");
             }
         } else {
             txtNombreAlumno.setText("Alumno no encontrado");
